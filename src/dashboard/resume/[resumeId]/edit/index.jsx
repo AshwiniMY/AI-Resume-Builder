@@ -26,19 +26,17 @@ function EditResume() {
 
   return (
     <ResumeInfoContext.Provider value={{resumeInfo,setResumeInfo}}>
-      <div className='min-h-screen bg-slate-50/30'>
-        <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 p-6 md:p-10 max-w-[1600px] mx-auto'>
+      <div className='h-screen bg-slate-50/30 overflow-hidden flex flex-col'>
+        <div className='flex-1 overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-0 max-w-[1600px] mx-auto w-full'>
             {/* Form Section (Left - 5 columns) */}
-            <div className='lg:col-span-5'>
+            <div className='lg:col-span-5 h-full overflow-y-auto p-6 md:p-10 border-r border-slate-200'>
                <FormSection/>
             </div>
-
+ 
             {/* Preview Section (Right - 7 columns) */}
-            <div className='lg:col-span-7 h-fit'>
-               <div className='sticky top-24 transition-all duration-300'>
-                  <div className='max-h-[calc(100vh-120px)] overflow-y-auto rounded-lg shadow-sm custom-scrollbar'>
-                    <ResumePreview/>
-                  </div>
+            <div className='lg:col-span-7 h-full overflow-y-auto p-6 md:p-10 bg-white/50 backdrop-blur-sm'>
+               <div className='max-w-[800px] mx-auto'>
+                  <ResumePreview/>
                </div>
             </div>
         </div>
