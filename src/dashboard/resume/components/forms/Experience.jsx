@@ -77,7 +77,7 @@ function Experience() {
             }
         }
 
-        GlobalApi.UpdateResumeDetail(params?.resumeId,data).then(res=>{
+        GlobalApi.UpdateResumeDetail(resumeInfo?.documentId,data).then(res=>{
             setLoading(false);
             toast('Experience details saved successfully.')
         },(error)=>{

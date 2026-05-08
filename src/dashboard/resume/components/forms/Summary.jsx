@@ -56,7 +56,7 @@ function Summary({enabledNext}) {
         e.preventDefault();
         setLoading(true)
         const data={ data:{ summary:summary } }
-        GlobalApi.UpdateResumeDetail(params?.resumeId,data).then(resp=>{
+        GlobalApi.UpdateResumeDetail(resumeInfo?.documentId,data).then(resp=>{
             enabledNext(true);
             setLoading(false);
             toast("Summary updated successfully")

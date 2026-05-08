@@ -81,7 +81,7 @@ function Skills() {
             }
         }
 
-        GlobalApi.UpdateResumeDetail(resumeId,data)
+        GlobalApi.UpdateResumeDetail(resumeInfo?.documentId,data)
         .then(resp=>{
             setLoading(false);
             toast('Skills updated successfully.')

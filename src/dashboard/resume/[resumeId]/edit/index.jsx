@@ -15,7 +15,12 @@ function EditResume() {
 
     const GetResumeInfo=()=>{
         GlobalApi.GetResumeById(resumeId).then(resp=>{
-          setResumeInfo(resp.data.data);
+          const data = resp.data.data;
+          // Store documentId specifically for API updates
+          setResumeInfo({
+            ...data,
+            documentId: data.documentId
+          });
         })
     }
 
@@ -29,9 +34,11 @@ function EditResume() {
             </div>
 
             {/* Preview Section (Right - 7 columns) */}
-            <div className='lg:col-span-7'>
-               <div className='sticky top-24'>
-                  <ResumePreview/>
+            <div className='lg:col-span-7 h-fit'>
+               <div className='sticky top-24 transition-all duration-300'>
+                  <div className='max-h-[calc(100vh-120px)] overflow-y-auto rounded-lg shadow-sm custom-scrollbar'>
+                    <ResumePreview/>
+                  </div>
                </div>
             </div>
         </div>

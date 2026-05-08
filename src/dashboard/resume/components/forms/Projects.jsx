@@ -94,7 +94,7 @@ function Projects() {
                 projects: projectList
             }
         };
-        GlobalApi.UpdateResumeDetail(params?.resumeId, data).then(resp => {
+        GlobalApi.UpdateResumeDetail(resumeInfo?.documentId, data).then(resp => {
             setLoading(false);
             toast('Projects updated successfully');
         }, (error) => {

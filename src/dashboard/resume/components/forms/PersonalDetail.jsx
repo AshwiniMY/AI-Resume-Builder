@@ -61,7 +61,7 @@ function PersonalDetail({enabledNext}) {
         const data={
             data:formData
         }
-        GlobalApi.UpdateResumeDetail(params?.resumeId,data).then(resp=>{
+        GlobalApi.UpdateResumeDetail(resumeInfo?.documentId,data).then(resp=>{
             enabledNext(true);
             setLoading(false);
             toast("Personal details saved.")

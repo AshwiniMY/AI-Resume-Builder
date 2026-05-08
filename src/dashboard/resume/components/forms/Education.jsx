@@ -63,7 +63,7 @@ function Education() {
       }
     }
 
-    GlobalApi.UpdateResumeDetail(resumeId,data).then(resp=>{
+    GlobalApi.UpdateResumeDetail(resumeInfo?.documentId,data).then(resp=>{
       setLoading(false);
       toast('Education updated successfully.')
     },(error)=>{
