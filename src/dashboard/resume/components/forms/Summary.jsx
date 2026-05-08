@@ -46,7 +46,11 @@ function Summary({enabledNext}) {
             }
         } catch (error) {
             console.error(error);
-            toast(`Error: ${error.message}`);
+            if(error.message.includes('429')) {
+                toast("AI is busy. Please wait 1 minute and try again.");
+            } else {
+                toast("AI Assist failed. Please try again later.");
+            }
         } finally {
             setLoading(false);
         }

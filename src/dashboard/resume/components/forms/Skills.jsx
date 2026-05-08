@@ -67,7 +67,11 @@ function Skills() {
                 toast('Skills suggested by AI');
             }
         } catch (error) {
-            toast('Failed to generate skill suggestions');
+            if(error.message.includes('429')) {
+                toast("AI is busy. Please wait 1 minute and try again.");
+            } else {
+                toast("Failed to generate skill suggestions");
+            }
         } finally {
             setAiLoading(false);
         }

@@ -74,7 +74,11 @@ function Projects() {
                 setProjectList(newEntries);
             }
         } catch (error) {
-            toast('Failed to generate description');
+            if(error.message.includes('429')) {
+                toast("AI is busy. Please wait 1 minute and try again.");
+            } else {
+                toast('Failed to generate description');
+            }
         } finally {
             setAiLoading(-1);
         }

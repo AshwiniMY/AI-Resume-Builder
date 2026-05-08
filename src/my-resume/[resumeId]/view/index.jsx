@@ -49,7 +49,11 @@ function ViewResume() {
             }
         } catch (error) {
             console.error("Error generating ATS score:", error);
-            toast("Failed to generate AI insights.");
+            if(error.message.includes('429')) {
+                toast("AI Insights are temporarily unavailable (Quota limit).");
+            } else {
+                toast("Failed to generate AI insights.");
+            }
         } finally {
             setLoading(false);
         }
