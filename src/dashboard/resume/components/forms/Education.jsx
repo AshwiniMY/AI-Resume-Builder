@@ -20,7 +20,7 @@ function Education() {
       description:''
     }
   ])
-  const {resumeId}=useParams();
+  useParams();
   const [loading,setLoading]=useState(false);
   const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext);
 
@@ -28,7 +28,7 @@ function Education() {
     if(resumeInfo?.education?.length > 0) {
         setEducationalList(resumeInfo.education)
     }
-  },[resumeInfo])
+  },[resumeInfo?.documentId])
 
   const handleChange=(event,index)=>{
     const newEntries=educationalList.slice();

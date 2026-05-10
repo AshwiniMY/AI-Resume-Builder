@@ -6,7 +6,15 @@ import { BtnBold, BtnBulletList, BtnItalic, BtnLink, BtnNumberedList, BtnStrikeT
 import { AIChatSession } from './../../../../service/AIModal';
 import { toast } from 'sonner';
 
-const PROMPT = 'position title: {positionTitle}. Based on this position title, provide 5-7 bullet points for a resume experience section. Format the output as a valid JSON object with a single key "bulletPoints" containing the bullet points formatted as a single HTML string containing <ul> and <li> tags.';
+const PROMPT = `You are an expert resume writer.
+Target Job Role: {targetJobRole}
+Target Job Description: {targetJobDescription}
+
+Task: For the position of "{positionTitle}", write 5-7 professional resume bullet points. 
+Rules:
+- Align the bullet points to the skills and keywords found in the Target Job Description.
+- Use strong action verbs and measurable results.
+- Return ONLY a valid JSON object with a single key "bulletPoints" containing the bullet points formatted as a single HTML string containing <ul> and <li> tags.`;
 
 function RichTextEditor({ onRichTextEditorChange, index, defaultValue }) {
   const [value, setValue] = useState(defaultValue);
@@ -20,7 +28,14 @@ function RichTextEditor({ onRichTextEditorChange, index, defaultValue }) {
       return;
     }
     setLoading(true)
-    const prompt = PROMPT.replace('{positionTitle}', resumeInfo.experience[index].title);
+    
+    const targetJobRole = resumeInfo?.jobRole || resumeInfo?.jobTitle || 'Relevant Professional';
+    const targetJobDescription = resumeInfo?.jobDescription || 'No specific job description provided.';
+
+    const prompt = PROMPT
+      .replace('{positionTitle}', resumeInfo.experience[index].title)
+      .replace('{targetJobRole}', targetJobRole)
+      .replace('{targetJobDescription}', targetJobDescription);
 
     try {
       const result = await AIChatSession.sendMessage(prompt);

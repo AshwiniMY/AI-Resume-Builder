@@ -8,28 +8,42 @@ import { Brain, LoaderCircle, Sparkles, Lightbulb, CheckCircle2 } from 'lucide-r
 import { toast } from 'sonner';
 import { AIChatSession } from './../../../../../service/AIModal';
 
-const prompt="Job Title: {jobTitle}. Provide resume summaries for 3 levels: Fresher, Mid, and Senior. Return a JSON array of objects with 'summary' and 'experience_level' fields."
+const prompt = `You are an expert ATS Resume Writer and HR specialist.
+Target Job Role: {jobRole}
+Job Description provided by the company: {jobDescription}
+
+Your task: Analyze the job description carefully. Extract the most critical keywords, required skills, and required experiences. Then write 3 professional resume summaries tailored specifically for this job posting.
+
+Rules:
+- Each summary must naturally include the top ATS keywords from the job description.
+- Write for 3 experience levels: Fresher, Mid Level, and Senior Level.
+- Each summary must be 2-3 sentences. Professional tone. No fluff.
+- Return ONLY a valid JSON array with no extra text. Format: [{"experience_level":"Fresher","summary":"..."},{"experience_level":"Mid Level","summary":"..."},{"experience_level":"Senior","summary":"..."}]`
 
 function Summary({enabledNext}) {
     const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext);
     const [summary,setSummary]=useState('');
     const [loading,setLoading]=useState(false);
-    const params=useParams();
+    useParams();
     const [aiGeneratedSummaryList,setAiGenerateSummaryList]=useState();
 
     useEffect(()=>{
         if(resumeInfo?.summary) {
             setSummary(resumeInfo.summary)
         }
-    },[resumeInfo])
+    },[resumeInfo?.documentId])
 
     const GenerateSummaryFromAI=async()=>{
-        if(!resumeInfo?.jobTitle) {
-            toast('Please enter a Job Title in Personal Details first');
+        const jobRole = resumeInfo?.jobRole || resumeInfo?.jobTitle;
+        if(!jobRole) {
+            toast('Please create a resume with a Target Job Role first.');
             return;
         }
         setLoading(true)
-        const PROMPT=prompt.replace('{jobTitle}',resumeInfo?.jobTitle);
+        const jobDescription = resumeInfo?.jobDescription || 'No specific job description provided. Generate a general professional summary for this role.';
+        const PROMPT = prompt
+            .replace('{jobRole}', jobRole)
+            .replace('{jobDescription}', jobDescription);
         try {
             const result=await AIChatSession.sendMessage(PROMPT);
             let text = result.response.text();

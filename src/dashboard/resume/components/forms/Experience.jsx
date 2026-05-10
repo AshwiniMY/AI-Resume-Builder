@@ -11,7 +11,7 @@ import { LoaderCircle, Briefcase, Plus, Trash2, Calendar, MapPin, Sparkles, Chec
 function Experience() {
     const [experinceList,setExperinceList]=useState([]);
     const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext);
-    const params=useParams();
+    useParams();
     const [loading,setLoading]=useState(false);
 
     useEffect(()=>{
@@ -29,7 +29,7 @@ function Experience() {
                 currentlyWorking: false
             }]);
         }
-    },[resumeInfo])
+    },[resumeInfo?.documentId])
 
     const handleChange=(index,event)=>{
         const newEntries=experinceList.slice();

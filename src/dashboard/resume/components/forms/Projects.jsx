@@ -14,7 +14,7 @@ const PROMPT = 'Project Name: {projectName}, Tech Stack: {techStack}. Based on t
 function Projects() {
     const [projectList, setProjectList] = useState([]);
     const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-    const params = useParams();
+    useParams();
     const [loading, setLoading] = useState(false);
     const [aiLoading, setAiLoading] = useState(-1);
 
@@ -30,7 +30,7 @@ function Projects() {
                 description: ''
             }]);
         }
-    }, [resumeInfo]);
+    }, [resumeInfo?.documentId]);
 
     const handleChange = (index, event) => {
         const newEntries = projectList.slice();

@@ -8,14 +8,18 @@ import { useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { AIChatSession } from './../../../../../service/AIModal'
 
-const PROMPT = 'Job Title: {jobTitle}. Provide a list of 10-15 top technical skills for this role as a JSON array of strings under the key "skills".';
+const PROMPT = `Target Job Role: {jobRole}
+Target Job Description: {targetJobDescription}
+
+Task: Based on the job description above, provide a list of the 10-15 most critical technical skills and keywords that should be on a resume to pass an ATS scan for this specific role.
+Return ONLY a valid JSON object with a single key "skills" containing a JSON array of strings.`;
 
 function Skills() {
 
     const [skillsList,setSkillsList]=useState([{
         name:''
     }])
-    const {resumeId}=useParams();
+    useParams();
 
     const [loading,setLoading]=useState(false);
     const [aiLoading, setAiLoading] = useState(false);
@@ -25,7 +29,7 @@ function Skills() {
         if(resumeInfo?.skills?.length > 0) {
             setSkillsList(resumeInfo.skills)
         }
-    },[resumeInfo])
+    },[resumeInfo?.documentId])
    
     const handleChange=(index,name,value)=>{
         const newEntries=skillsList.slice();
@@ -45,12 +49,16 @@ function Skills() {
     }
 
     const GenerateSkillsFromAI = async () => {
-        if(!resumeInfo?.jobTitle) {
-            toast('Please enter a Job Title in Personal Details first');
-            return;
-        }
-        setAiLoading(true);
-        const prompt = PROMPT.replace('{jobTitle}', resumeInfo.jobTitle);
+    const jobRole = resumeInfo?.jobRole || resumeInfo?.jobTitle;
+    if(!jobRole) {
+        toast('Please enter a Job Role in Personal Details first');
+        return;
+    }
+    setAiLoading(true);
+    const jobDescription = resumeInfo?.jobDescription || 'No specific job description provided.';
+    const prompt = PROMPT
+        .replace('{jobRole}', jobRole)
+        .replace('{targetJobDescription}', jobDescription);
         try {
             const result = await AIChatSession.sendMessage(prompt);
             const text = result.response.text();

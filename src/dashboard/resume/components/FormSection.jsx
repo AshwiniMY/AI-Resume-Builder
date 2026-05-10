@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PersonalDetail from './forms/PersonalDetail'
+import TargetJob from './forms/TargetJob'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, ArrowRight, Settings2, CheckCircle2 } from 'lucide-react'
 import Summary from './forms/Summary';
@@ -16,13 +17,14 @@ function FormSection() {
   const {resumeId}=useParams();
 
   const steps = [
-    { id: 1, label: 'Personal' },
-    { id: 2, label: 'Summary' },
-    { id: 3, label: 'Experience' },
-    { id: 4, label: 'Projects' },
-    { id: 5, label: 'Education' },
-    { id: 6, label: 'Skills' },
-    { id: 7, label: 'Finalize' }
+    { id: 1, label: 'Target' },
+    { id: 2, label: 'Personal' },
+    { id: 3, label: 'Summary' },
+    { id: 4, label: 'Experience' },
+    { id: 5, label: 'Projects' },
+    { id: 6, label: 'Education' },
+    { id: 7, label: 'Skills' },
+    { id: 8, label: 'Finalize' }
   ];
 
   return (
@@ -31,9 +33,6 @@ function FormSection() {
         <div className='flex items-center justify-between bg-white p-4 rounded-xl border border-slate-200 shadow-sm'>
           <div className='flex items-center gap-3'>
             <ThemeColor/>
-            <Button variant="outline" size="sm" className="gap-2 text-slate-600">
-               <Settings2 className='h-4 w-4' /> Settings
-            </Button>
           </div>
           
           <div className='flex items-center gap-2'>
@@ -91,19 +90,21 @@ function FormSection() {
 
         {/* Form Content */}
         <div className='min-h-[500px]'>
-          {activeFormIndex === 1 ?  
+          {activeFormIndex === 1 ?
+            <TargetJob enabledNext={(v) => setEnableNext(v)} />
+            : activeFormIndex === 2 ?  
             <PersonalDetail enabledNext={(v) => setEnableNext(v)} />
-            : activeFormIndex === 2 ?
-              <Summary enabledNext={(v) => setEnableNext(v)} />
             : activeFormIndex === 3 ?
-              <Experience />  
+              <Summary enabledNext={(v) => setEnableNext(v)} />
             : activeFormIndex === 4 ?
-               <Projects />
+              <Experience />  
             : activeFormIndex === 5 ?
-              <Education />
+               <Projects />
             : activeFormIndex === 6 ?
-              <Skills />
+              <Education />
             : activeFormIndex === 7 ?
+              <Skills />
+            : activeFormIndex === 8 ?
               <Navigate to={'/my-resume/' + resumeId + "/view"} />
             : null
           }

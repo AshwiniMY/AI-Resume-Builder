@@ -9,13 +9,12 @@ import { toast } from 'sonner';
 
 function PersonalDetail({enabledNext}) {
 
-    const params=useParams();
+    useParams();
     const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
 
     const [formData,setFormData]=useState({
         firstName: '',
         lastName: '',
-        jobTitle: '',
         address: '',
         phone: '',
         email: '',
@@ -30,7 +29,6 @@ function PersonalDetail({enabledNext}) {
             setFormData({
                 firstName: resumeInfo?.firstName || '',
                 lastName: resumeInfo?.lastName || '',
-                jobTitle: resumeInfo?.jobTitle || '',
                 address: resumeInfo?.address || '',
                 phone: resumeInfo?.phone || '',
                 email: resumeInfo?.email || '',
@@ -39,7 +37,7 @@ function PersonalDetail({enabledNext}) {
                 portfolio: resumeInfo?.portfolio || '',
             })
         }
-    }, [resumeInfo])
+    }, [resumeInfo?.documentId]) // Only run when a new resume is loaded or documentId is first available
 
     const handleInputChange=(e)=>{
         enabledNext(false)
@@ -92,12 +90,7 @@ function PersonalDetail({enabledNext}) {
                     </label>
                     <Input name="lastName" value={formData.lastName} required onChange={handleInputChange} className="h-11 border-slate-200" />
                 </div>
-                <div className='md:col-span-2 space-y-2'>
-                    <label className='text-[10px] font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2'>
-                        <Briefcase className='h-3 w-3' /> Job Title
-                    </label>
-                    <Input name="jobTitle" value={formData.jobTitle} required onChange={handleInputChange} className="h-11 border-slate-200" />
-                </div>
+
                 <div className='md:col-span-2 space-y-2'>
                     <label className='text-[10px] font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2'>
                         <MapPin className='h-3 w-3' /> Address
