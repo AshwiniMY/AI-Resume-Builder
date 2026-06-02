@@ -19,4 +19,4 @@ npm run dev
 React, Tailwind CSS, Strapi CMS, PostgreSQL (NeonDB), Google Gemini API, Clerk Auth
 
 ## Author
-Ashwini M Y — [LinkedIn](#) | [GitHub](https://github.com/AshwiniMY)
+Ashwini M Y — [LinkedIn](https://www.linkedin.com/in/ashwiniyaraguppi09/) | [GitHub](https://github.com/AshwiniMY)
