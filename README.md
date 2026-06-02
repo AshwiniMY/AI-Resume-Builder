@@ -1,7 +1,7 @@
 # AI Resume Builder
 A professional AI-powered tool to build ATS-friendly resumes in minutes.
 
-**Live Demo:** [https://ai-resume-builder-4qga74eh3-ashwinimyaraguppi-4846s-projects.vercel.app/](https://ai-resume-builder-4qga74eh3-ashwinimyaraguppi-4846s-projects.vercel.app/)
+**Live Demo:** https://ai-resume-builder-gamma-black.vercel.app/
 
 ## Setup
 ```bash
